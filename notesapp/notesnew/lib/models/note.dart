@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Note {
   String? id;
   final String title;
@@ -39,4 +37,13 @@ class Note {
       'updated_at': updatedAt,
     };
   }
+}
+
+class DocumentSnapshot {
+  get id => null;
+  
+  data() {}
+}
+
+class Timestamp {
 }
