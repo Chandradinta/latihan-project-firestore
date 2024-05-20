@@ -4,7 +4,7 @@ import 'package:notesnew/services/note_service.dart';
 import 'package:notesnew/widgets/note_dialog.dart';
 
 class NoteListScreen extends StatefulWidget {
-  const NoteListScreen({Key? key});
+  const NoteListScreen({super.key});
 
   @override
   State<NoteListScreen> createState() => _NoteListScreenState();
@@ -23,7 +23,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
           showDialog(
             context: context,
             builder: (context) {
-              return NoteDialog();
+              return const NoteDialog();
             },
           );
         },
@@ -35,11 +35,11 @@ class _NoteListScreenState extends State<NoteListScreen> {
 }
 
 class NoteList extends StatelessWidget {
-  const NoteList({Key? key});
+  const NoteList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Note>>(
+    return StreamBuilder(
       stream: NoteService.getNoteList(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -53,11 +53,26 @@ class NoteList extends StatelessWidget {
           default:
             return ListView(
               padding: const EdgeInsets.only(bottom: 80),
-              children: snapshot.data!.map<Widget>((document) {
+              children: snapshot.data!.map((document) {
                 return Card(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      document.imageUrl != null &&
+                              Uri.parse(document.imageUrl!).isAbsolute
+                          ? ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(16),
+                                topRight: Radius.circular(16),
+                              ),
+                              child: Image.network(
+                                document.imageUrl!,
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                              ),
+                            )
+                          : Container(),
                       ListTile(
                         onTap: () {
                           showDialog(
@@ -79,21 +94,6 @@ class NoteList extends StatelessWidget {
                           ),
                         ),
                       ),
-                      if (document.imageUrl != null &&
-                          Uri.parse(document.imageUrl!).isAbsolute)
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(8),
-                            bottomRight: Radius.circular(8),
-                          ),
-                          child: Image.network(
-                            document.imageUrl!,
-                            width: double.infinity,
-                            height: 150,
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                          ),
-                        ),
                     ],
                   ),
                 );
@@ -104,7 +104,7 @@ class NoteList extends StatelessWidget {
     );
   }
 
-  void showAlertDialog(BuildContext context, Note document) {
+  showAlertDialog(BuildContext context, Note document) {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       child: const Text("No"),

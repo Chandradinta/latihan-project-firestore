@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/models/note.dart';
-import 'package:notes/services/note_service.dart';
+import 'package:notes/service/note_service.dart';
 
 class NoteDialog extends StatelessWidget {
   final Note? note;

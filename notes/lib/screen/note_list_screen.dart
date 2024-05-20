@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/models/note.dart';
-import 'package:notesapp/services/note_service.dart';
-import 'package:notesapp/widgets/note_dialog.dart';
+import 'package:notes/models/note.dart';
+import 'package:notes/service/note_service.dart';
+import 'package:notes/widgets/note_dialog.dart';
 
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
